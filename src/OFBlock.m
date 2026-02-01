@@ -138,7 +138,11 @@ static struct objc_module module = {
 
 OF_CONSTRUCTOR()
 {
+#ifdef __EMSCRIPTEN__
+	__objc_exec_class(&module, NULL);
+#else
 	__objc_exec_class(&module);
+#endif
 }
 /* End of ObjC module */
 #elif defined(OF_APPLE_RUNTIME)

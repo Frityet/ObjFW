@@ -27,6 +27,20 @@ dnl Used to disable checking for -pedantic on some platforms where it's broken
 check_pedantic="yes"
 
 case "$host" in
+*-*-emscripten*)
+	AS_IF([test x"$OBJCFLAGS" = x""], [OBJCFLAGS="-O2 -g"])
+	enable_shared="no"
+	enable_threads="no"
+	enable_sockets="no"
+	enable_files="no"
+	with_tls="no"
+	have_subprocesses="no"
+	check_pedantic="no"
+
+	emscripten_flags="-sALLOW_MEMORY_GROWTH=1 -sDISABLE_EXCEPTION_CATCHING=0"
+	LDFLAGS="$LDFLAGS $emscripten_flags"
+	OBJFW_LDFLAGS="$OBJFW_LDFLAGS $emscripten_flags"
+	;;
 arm-*-riscos*)
 	AS_IF([test x"$OBJCFLAGS" = x""], [OBJCFLAGS="-O2 -g"])
 	flags="-mfloat-abi=softfp -mfpu=vfp -mlibscl"

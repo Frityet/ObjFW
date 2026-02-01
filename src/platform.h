@@ -107,9 +107,19 @@
 # define OF_ELBRUS_2000
 #elif defined(__loongarch64)
 # define OF_LOONGARCH64
+#elif defined(__wasm32__)
+# define OF_WASM32
+#elif defined(__wasm64__)
+# define OF_WASM64
 #endif
 
-#if defined(__APPLE__)
+#if defined(OF_WASM32) || defined(OF_WASM64)
+# define OF_WASM
+#endif
+
+#if defined(__EMSCRIPTEN__)
+# define OF_EMSCRIPTEN
+#elif defined(__APPLE__)
 # include <TargetConditionals.h>
 # if (defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE) || \
     (defined(TARGET_OS_SIMULATOR) && TARGET_OS_SIMULATOR)

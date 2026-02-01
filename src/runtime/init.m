@@ -22,9 +22,17 @@
 #import "ObjFWRT.h"
 #import "private.h"
 
+#ifdef __EMSCRIPTEN__
+void
+__objc_exec_class(struct objc_module *module, void *unused)
+#else
 void
 __objc_exec_class(struct objc_module *module)
+#endif
 {
+#ifdef __EMSCRIPTEN__
+	(void)unused;
+#endif
 	_objc_globalMutex_lock();
 
 	_objc_registerAllSelectors(module->symtab);

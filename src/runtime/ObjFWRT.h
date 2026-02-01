@@ -759,7 +759,12 @@ extern void objc_removeAssociatedObjects(id _Nonnull object);
  */
 #ifdef __clang__
 struct objc_module;
+#ifdef __EMSCRIPTEN__
+extern void __objc_exec_class(struct objc_module *_Nonnull module,
+    void *_Nullable unused);
+#else
 extern void __objc_exec_class(struct objc_module *_Nonnull module);
+#endif
 #endif
 extern IMP _Nonnull objc_msg_lookup(id _Nullable object, SEL _Nonnull selector);
 extern IMP _Nonnull objc_msg_lookup_stret(id _Nullable object,

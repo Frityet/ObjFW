@@ -194,6 +194,15 @@ extern uintptr_t _Unwind_GetIP(struct _Unwind_Context *);
 extern uintptr_t _Unwind_GetGR(struct _Unwind_Context *, int);
 extern void _Unwind_SetIP(struct _Unwind_Context *, uintptr_t);
 extern void _Unwind_SetGR(struct _Unwind_Context *, int, uintptr_t);
+
+# ifdef __EMSCRIPTEN__
+__attribute__((weak))
+uintptr_t _Unwind_GetIP(struct _Unwind_Context *ctx)
+{
+	(void)ctx;
+	return 0;
+}
+# endif
 #else
 extern _Unwind_Reason_Code __gnu_unwind_frame(struct _Unwind_Exception *,
     struct _Unwind_Context *);
